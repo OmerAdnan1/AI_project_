@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  anime-backend:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Path inside the container where the checkpoint lives.
+      # Mount your checkpoint file with the volume below.
+      - MODEL_CHECKPOINT_PATH=/app/best_phase2.pt
+      - THRESHOLDS_PATH=/app/best_thresholds_cv.npy
+    volumes:
+      # Uncomment and adjust to mount your checkpoint files:
+      # - ./best_phase2.pt:/app/best_phase2.pt:ro
+      # - ./best_thresholds_cv.npy:/app/best_thresholds_cv.npy:ro
+      - ./main.py:/app/main.py   # live-reload during dev
+    restart: unless-stopped
